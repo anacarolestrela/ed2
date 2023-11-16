@@ -39,6 +39,22 @@ def Pesquisa(x, Ap):
 
     return x
 
+
+def PesquisaAlfa(chave, Ap):
+    i = 0
+    if Ap is None:
+        print("Registro não está presente na árvore\n")
+        return
+
+    while i < Ap.n:
+        if Ap.r[i].Chave.startswith(chave):
+            print(Ap.r[i].Chave, "-", Ap.r[i].Elemento)
+        elif chave < Ap.r[i].Chave:
+            PesquisaAlfa(chave, Ap.p[i])
+        i += 1
+
+    PesquisaAlfa(chave, Ap.p[i])
+
 # Funções de inserção
 
 # Insere o registro na página escolhida
@@ -147,7 +163,6 @@ def _InserirElementos(Ap, ordem, dataframe, chave):
 def _pegarLetrasIndice(dataframe, i, indiceNaPalavra=1):
     if i < len(dataframe) and len(dataframe[i]) > 1:
         palavra = dataframe[i][0].lower()
-        print(palavra[:indiceNaPalavra])
         if palavra[:indiceNaPalavra] in indexLettersUsed:
             return _pegarLetrasIndice(dataframe, i, indiceNaPalavra+1)
         return palavra[:indiceNaPalavra]
@@ -165,9 +180,7 @@ def _InserirElementosAlfa(Ap, ordem, dataframe, chave):
 
         reg.Elemento = dataframe[i]
         Ap = _Insere(reg, Ap, ordem)
-    return Ap, chave
-
-# Define os registros a serem inseridos
+    return Ap
 
 
 def _loadCSVContent(filename):
@@ -178,15 +191,16 @@ def _loadCSVContent(filename):
     return data
 
 
-def Inserir(Ap, chave):
+def Inserir(Ap, ApAlfa, chave):
     ordem = int(input("Digite a ordem da árvore:"))
     arq = input("Digite o nome do arquivo:")
     if arq.lower().endswith(".csv"):
         dataframe = _loadCSVContent(arq)
     else:
         print("Arquivo incompatível.")
-    Ap, chave = _InserirElementosAlfa(Ap, ordem, dataframe, chave)
-    return Ap, chave
+    Ap, chave = _InserirElementos(Ap, ordem, dataframe, chave)
+    ApAlfa = _InserirElementosAlfa(ApAlfa, ordem, dataframe, chave)
+    return Ap, ApAlfa, chave
 
 # Impressão
 
