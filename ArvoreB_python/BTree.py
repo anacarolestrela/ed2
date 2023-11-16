@@ -55,6 +55,52 @@ def PesquisaAlfa(chave, Ap):
 
     PesquisaAlfa(chave, Ap.p[i])
 
+#pesquisas em intervalo
+def BuscaPorIntervaloNumerico(Ap, x, y):
+    if Ap is None:
+        return
+
+    i = 0
+    while i < Ap.n and x > Ap.r[i].Chave:
+        i += 1
+
+    if Ap.p[i] is not None and x == Ap.r[i].Chave:
+        Imprime(Ap.p[i])  
+    elif Ap.p[i] is not None and x < Ap.r[i].Chave:
+        BuscaPorIntervaloNumerico(Ap.p[i], x, y)
+
+    i = 0
+    while i < Ap.n and Ap.r[i].Chave <= y:
+        if Ap.r[i].Chave >= x:
+            print(Ap.r[i].Chave, "-", Ap.r[i].Elemento)
+        i += 1
+
+    if Ap.p[i] is not None and y > Ap.r[i - 1].Chave:
+        BuscaPorIntervaloNumerico(Ap.p[i], x, y)
+
+
+def BuscaPorIntervaloAlfa(Ap, x, y):
+    if Ap is None:
+        return
+
+    i = 0
+    while i < Ap.n and x > Ap.r[i].Chave:
+        i += 1
+
+    if Ap.p[i] is not None and x.startswith(Ap.r[i].Chave):
+        Imprime(Ap.p[i])  
+    elif Ap.p[i] is not None and x < Ap.r[i].Chave:
+        BuscaPorIntervaloAlfa(Ap.p[i], x, y)
+
+    i = 0
+    while i < Ap.n and Ap.r[i].Chave <= y:
+        if Ap.r[i].Chave >= x:
+            print(Ap.r[i].Chave, "-", Ap.r[i].Elemento)
+        i += 1
+
+    if Ap.p[i] is not None and y > Ap.r[i - 1].Chave:
+        BuscaPorIntervaloAlfa(Ap.p[i], x, y)
+
 # Funções de inserção
 
 # Insere o registro na página escolhida
