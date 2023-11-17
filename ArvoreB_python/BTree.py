@@ -61,20 +61,18 @@ def BuscaPorIntervaloNumerico(Ap, x, y):
         return
 
     i = 0
-    while i < Ap.n and x > Ap.r[i].Chave:
+    while i < Ap.n and Ap.r[i].Chave < x:
         i += 1
-
-    if Ap.p[i] is not None and x == Ap.r[i].Chave:
-        Imprime(Ap.p[i])  
-    elif Ap.p[i] is not None and x < Ap.r[i].Chave:
-        BuscaPorIntervaloNumerico(Ap.p[i], x, y)
 
     while i < Ap.n and Ap.r[i].Chave <= y:
-        if Ap.r[i].Chave >= x:
-            print(Ap.r[i].Chave, "-", Ap.r[i].Elemento)
+        if Ap.p[i] is not None:
+            Imprime(Ap.p[i])
+        for j in range(Ap.n):
+            if Ap.r[j].Chave >= x and Ap.r[j].Chave <= y:
+                print(Ap.r[j].Chave, "-", Ap.r[j].Elemento)
         i += 1
 
-    if i < Ap.n and Ap.p[i] is not None and y > Ap.r[i - 1].Chave:
+    if i < len(Ap.p) and Ap.p[i] is not None:
         BuscaPorIntervaloNumerico(Ap.p[i], x, y)
 
 
@@ -86,17 +84,15 @@ def BuscaPorIntervaloAlfa(Ap, x, y):
     while i < Ap.n and x > Ap.r[i].Chave:
         i += 1
 
-    if Ap.p[i] is not None and x.startswith(Ap.r[i].Chave):
-        Imprime(Ap.p[i])  
-    elif Ap.p[i] is not None and x < Ap.r[i].Chave:
-        BuscaPorIntervaloAlfa(Ap.p[i], x, y)
-
     while i < Ap.n and Ap.r[i].Chave <= y:
-        if Ap.r[i].Chave >= x:
-            print(Ap.r[i].Chave, "-", Ap.r[i].Elemento)
+        if Ap.p[i] is not None:
+            Imprime(Ap.p[i])
+        for j in range(Ap.n):
+            if Ap.r[j].Chave >= x and Ap.r[j].Chave <= y:
+                print(Ap.r[j].Chave, "-", Ap.r[j].Elemento)
         i += 1
 
-    if i < Ap.n and Ap.p[i] is not None and y > Ap.r[i - 1].Chave:
+    if i < len(Ap.p) and Ap.p[i] is not None:
         BuscaPorIntervaloAlfa(Ap.p[i], x, y)
 # Funções de inserção
 
